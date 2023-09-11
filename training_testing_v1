@@ -1,0 +1,52 @@
+import json
+import spacy
+from spacy.training.example import Example
+
+# Load the annotated data from the JSON file
+with open('training_testing_basic_annotations.json', 'r') as file:
+    annotated_data = json.load(file)
+
+# Extract annotated examples
+annotated_examples = annotated_data.get('examples', [])
+
+# Prepare training data in the required format
+training_data = []
+for example in annotated_examples:
+    content = example.get('content', '')
+    annotations = example.get('annotations', [])
+
+    entities = []
+    for annotation in annotations:
+        start = annotation.get('start', 0)
+        end = annotation.get('end', 0)
+        label = annotation.get('value', '')
+        entities.append((start, end, label))
+
+    training_data.append((content, {"entities": entities}))
+
+# Load a pre-trained SpaCy model
+nlp = spacy.blank("en")
+
+# Add a NER component to the pipeline
+ner = nlp.add_pipe('ner')
+
+# Add custom labels
+ner.add_label("health benefit")
+ner.add_label("metabolite")
+
+# Begin training
+nlp.begin_training()
+
+for itn in range(10):  # Experiment with the number of iterations
+    for text, annotations in training_data:
+        example = Example.from_dict(nlp.make_doc(text), annotations)
+        nlp.update([example])
+
+# Save the trained model
+nlp.to_disk('ner_model_testv1')
+
+# Test the model
+nlp = spacy.load('ner_model_testv1')
+doc = nlp("In the body, beta-carotene converts into vitamin A (retinol). We need vitamin A for good vision and eye health, for a strong immune system, and for healthy skin and mucous membranes.")
+for ent in doc.ents:
+    print(ent.text, ent.label_)
