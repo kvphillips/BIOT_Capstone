@@ -1,3 +1,8 @@
+# open cmd prompt and install the following programs using the following prompts
+# pip install json
+# pip install spacy
+# save this code along with the JSON file in the same folder. The output will create a whole folder with the model in it called "ner_model_testv1"
+
 import json
 import spacy
 from spacy.training.example import Example
