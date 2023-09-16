@@ -1,7 +1,6 @@
 # use lighttag to produce a .json file (manually annotated files)
 # ensure that this .py file is in the same location as your .json file update the name of the .json file in the code
 # it will then output a .spacy file in the same directory as the original .json file
-# the trained model will be saved in the same folder directory as the .py file and named "ner_model"
 # Install the following prompts into the cmd prompt:
 #   pip install json
 #   pip install spacy
@@ -71,4 +70,7 @@ doc = nlp(text)
 
 for ent in doc.ents:
     print(ent.text, ent.label_)
+
+
+
 
