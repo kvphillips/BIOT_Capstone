@@ -1,0 +1,21 @@
+#Open the FASTA file in the designated directory and read through each line
+
+with open("path_to_your_fasta_file.fasta", 'r') as file:
+    lines = file.readlines()
+    sequence = ''.join(line.strip() for line in lines[1:])
+
+#count the total number of C and G nucleotides in the sequence
+
+gc_count = sequence.count('G') + sequence.count('C')
+
+#determine the total count which would be the length of the sequence
+
+total_count = len(sequence)
+
+# determine the percentage GC content
+
+gc_content = (gc_count / total_count) * 100
+
+# output the percentage
+
+print(f"The GC content is: {gc_content:.2f}%")
