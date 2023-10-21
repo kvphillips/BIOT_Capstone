@@ -21,7 +21,8 @@ with open("ALL_metabolites_health_v1.txt", 'r', encoding='utf-8') as file:
 
 new_examples = []
 
-#for loop that iterated through the new_training_data, where a spaCy doc object is created, this is needed to create the training example
+#for loop that iterated through the new_training_data, where a spaCy doc object is created, 
+#this is needed to create the training example
 
 for data in new_training_data:
     doc = nlp.make_doc(data["text"])
