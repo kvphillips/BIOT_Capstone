@@ -9,8 +9,8 @@ app = QApplication([])
 #user input and copy/pasted text is collected from a pop-up dialog box
 user_input, ok = QInputDialog.getText(None, "Input", "Enter your text:")
 
-#model is setup to label entire sentences, therefore this will remove output words that are commonly mislabelled within the sentence
-#and add no value to the data ouptput
+#model is setup to label entire sentences, therefore this will remove output words that are 
+#commonly mislabelled within the sentence and add no value to the data ouptput
 common_words = ["making", "which", "it", "is", "also", "its", "some", "that", "can", "you",
                 "like", "may", "of", "be", "this", "by", "&", "the", "and",
                 "or", "a", "an", "in", "on", "at", "to", "for", "with", "as",
