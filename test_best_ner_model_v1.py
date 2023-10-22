@@ -1,3 +1,4 @@
+#import required libraries to execute code
 import spacy
 from PyQt5.QtWidgets import QApplication, QInputDialog
 
