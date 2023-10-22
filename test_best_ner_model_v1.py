@@ -1,15 +1,16 @@
 import spacy
 from PyQt5.QtWidgets import QApplication, QInputDialog
 
-# Load your NER model
+#load the finalized NER model
 nlp = spacy.load("best_ner_model_v1")
 
 app = QApplication([])
 
-# Get user input from a pop-up dialog box
+#user input and copy/pasted text is collected from a pop-up dialog box
 user_input, ok = QInputDialog.getText(None, "Input", "Enter your text:")
 
-# Define a list of common words to filter out
+#model is setup to label entire sentences, therefore this will remove output words that are commonly mislabelled within the sentence
+#and add no value to the data ouptput
 common_words = ["making", "which", "it", "is", "also", "its", "some", "that", "can", "you",
                 "like", "may", "of", "be", "this", "by", "&", "the", "and",
                 "or", "a", "an", "in", "on", "at", "to", "for", "with", "as",
@@ -20,18 +21,18 @@ common_words = ["making", "which", "it", "is", "also", "its", "some", "that", "c
                 "They"]
 
 def process_word(word):
-    # Process the word
+#process each word with the NLP model
     doc = nlp(word)
     
-    # Check if the word is a metabolite or health benefit
+#check if the word is a metabolite or health benefit and print the output entity and label
     if doc[0].ent_type_ in ['metabolite', 'health benefit']:
         print(f"Entity: {word}, Label: {doc[0].ent_type_}")
 
 if ok:
-    # Remove commas and split the input into words
+#remove additional special characters like commas and split the input into words
     words = user_input.replace(',', '').split()
-    
-    # Process each word
+
+#process each word in prep to be fed into the mode
     for word in words:
         if word.lower() not in common_words:
             process_word(word)
